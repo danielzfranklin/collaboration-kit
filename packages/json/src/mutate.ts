@@ -1,5 +1,6 @@
 import {
   assertIsJsonTemplate,
+  Json,
   JsonTemplateArray,
   JsonTemplateContainer,
   JsonTemplateObject,
@@ -35,7 +36,7 @@ export function deepMergeJson<T extends JsonTemplateObjectDeep>(
 ): void {
   assertIsJsonTemplate(objectToMutate)
   assertIsJsonTemplate(newState)
-  const delta = diff(objectToMutate, newState)
+  const delta = diff(objectToMutate, newState as DeepPartial<T> & Json)
   removeDeletionDeltas(delta)
   patch(objectToMutate, delta)
   deepNormalizeJson(objectToMutate)
